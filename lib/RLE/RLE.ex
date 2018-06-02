@@ -1,4 +1,29 @@
 defmodule RLE do
+  @doc ~S"""
+  Run-length encodes a given string
+
+  ## Examples
+
+      iex> RLE.encode("😀😀😁😂aaaa😚😚😿🤷‍♂️🧜‍♀️🧜‍♀️🤵")
+      [
+        {"😀", 2},
+        {"😁", 1},
+        {"😂", 1},
+        {"a", 4},
+        {"😚", 2},
+        {"😿", 1},
+        {"🤷‍♂️", 1},
+        {"🧜‍♀️", 2},
+        {"🤵", 1}
+      ]
+      
+      iex> RLE.encode("")
+      []
+
+      iex> RLE.encode("aaaabbcdeeeeff")
+      [{"a", 4,}, {"b", 2}, {"c", 1}, {"d", 1}, {"e", 4}, {"f", 2}]
+  """
+
   def encode(""), do: []
 
   def encode(string) do
@@ -22,6 +47,3 @@ defmodule RLE do
   def decode(encoded) do
   end
 end
-
-# 😀😀😁😂aaaa😚😚😿🤷‍♂️🧜‍♀️🧜‍♀️🤵
-
