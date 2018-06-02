@@ -1,6 +1,9 @@
 defmodule BWT.Transform do
+  def transform(""), do: ""
+
   def transform(s) do
-    rotations(s <> <<0>>, 1)
+    (s <> <<0>>)
+    |> rotations(1)
     |> Enum.sort()
     |> Enum.map(&String.last/1)
     |> Enum.join()
@@ -16,7 +19,7 @@ defmodule BWT.Transform do
   end
 
   defp rotate(s) do
-    [h | t] = String.codepoints(s)
-    (t ++ [h]) |> to_string
+    l = String.length(s)
+    String.last(s) <> String.slice(s, 0, l - 1)
   end
 end

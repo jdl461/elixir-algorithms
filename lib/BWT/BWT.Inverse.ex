@@ -1,4 +1,6 @@
 defmodule BWT.Inverse do
+  def inverse(""), do: ""
+
   def inverse(s) do
     table = init_table(s)
 
@@ -23,7 +25,10 @@ defmodule BWT.Inverse do
   end
 
   defp add(s, table) do
-    String.split(s, "", trim: true) |> Enum.zip(table) |> Enum.map(&append_table/1) |> Enum.sort()
+    String.split(s, "", trim: true)
+    |> Enum.zip(table)
+    |> Enum.map(&append_table/1)
+    |> Enum.sort()
   end
 
   defp append_table({row, char}) do
