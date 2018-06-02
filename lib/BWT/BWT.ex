@@ -10,7 +10,7 @@ defmodule BWT do
   Transforms the given binary using the Burroughs-Wheeler transformation.
   """
   def transform(s) when is_binary(s) do
-    Transform.transform(s) 
+    Transform.transform(s)
   end
 
   @doc """
@@ -20,5 +20,4 @@ defmodule BWT do
   def inverse(s) when is_binary(s) do
     Inverse.inverse(s)
   end
-
 end

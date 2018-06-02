@@ -1,6 +1,6 @@
 defmodule RLE do
   @doc ~S"""
-  Run-length encodes a given string
+  Perform run-length encoding and decoding.
 
   ## Examples
 
@@ -24,11 +24,11 @@ defmodule RLE do
       [{"a", 4,}, {"b", 2}, {"c", 1}, {"d", 1}, {"e", 4}, {"f", 2}]
   """
 
-  def encode(""), do: []
-
   def encode(string) do
-    [h|t] = String.graphemes(string)
-    encode(h, t, 1, [])
+    case String.graphemes(string) do
+      [] -> []
+      [h | t] -> encode(h, t, 1, [])
+    end
   end
 
   defp encode(char, [], count, output) do
@@ -36,7 +36,8 @@ defmodule RLE do
   end
 
   defp encode(char, string, count, output) do
-    [h|t] = string
+    [h | t] = string
+
     if char == h do
       encode(char, t, count + 1, output)
     else
