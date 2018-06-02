@@ -1,7 +1,9 @@
 defmodule RLE do
-  @doc ~S"""
+  @moduledoc ~S"""
   Perform run-length encoding and decoding.
+  """
 
+  @doc ~S"""
   ## Examples
 
       iex> RLE.encode("😀😀😁😂aaaa😚😚😿🤷‍♂️🧜‍♀️🧜‍♀️🤵")
@@ -20,10 +22,15 @@ defmodule RLE do
       iex> RLE.encode("")
       []
 
-      iex> RLE.encode("aaaabbcdeeeeff")
-      [{"a", 4,}, {"b", 2}, {"c", 1}, {"d", 1}, {"e", 4}, {"f", 2}]
-  """
+      iex> RLE.encode("a")
+      [{"a", 1}]
 
+      iex> RLE.encode("😀")
+      [{"😀", 1}]
+
+      iex> RLE.encode("aaaabbcdeeeeff")
+      [{"a", 4}, {"b", 2}, {"c", 1}, {"d", 1}, {"e", 4}, {"f", 2}]
+  """
   def encode(string) do
     case String.graphemes(string) do
       [] -> []
@@ -45,6 +52,26 @@ defmodule RLE do
     end
   end
 
+  @doc ~S"""
+  Decodes a run-length encoded string.
+
+  Returns a string.
+
+  ## Examples
+
+    iex> RLE.decode([])
+    ""
+
+    iex> RLE.decode([{"a", 1}])
+    "a"
+
+    iex> RLE.decode([{"😀", 2}, {"😁", 1}, {"😂", 5}, {"a", 3}, {"😚", 2}, {"😿", 1}, {"🤷‍♂️", 1}, {"🧜‍♀️", 2}, {"🤵", 1}])
+    "😀😀😁😂😂😂😂😂aaa😚😚😿🤷‍♂️🧜‍♀️🧜‍♀️🤵"
+  """
   def decode(encoded) do
+    case encoded do
+      [] -> ""
+      [{char, count} | t] -> String.pad_trailing("", count, char) <> decode(t)
+    end
   end
 end
